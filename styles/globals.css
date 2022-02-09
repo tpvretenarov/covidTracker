@@ -2,8 +2,19 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+  height: 100%;
+  background-color: #191919;
+  color: #2d4263;
+}
+
+h1 {
+  color: #c84b31;
+}
+
+h2 {
+  color: #ecdbba;
 }
 
 a {

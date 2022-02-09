@@ -1,34 +1,35 @@
 import * as React from 'react';
 import { useState } from 'react';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { ViewportProps } from 'react-map-gl';
 
 const Home = () => {
-  const [viewport, setViewport] = useState({
-    width: 400,
-    height: 400,
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
-  });
+  const [viewport, setViewport] = useState({ latitude: 37.7577, longitude: -122.4376, zoom: 8 });
+
+  const handleViewPort = (nextViewport: ViewportProps) => {
+    if (nextViewport) {
+      setViewport({
+        ...viewport,
+        latitude: nextViewport.latitude ? nextViewport.latitude : viewport.latitude,
+        longitude: nextViewport.longitude ? nextViewport.longitude : viewport.longitude,
+        zoom: nextViewport.zoom ? nextViewport.zoom : viewport.zoom,
+      });
+    }
+  };
+
   return (
-    <ReactMapGL
-      mapboxApiAccessToken={`${process.env.NEXT_PUBLIC_MAPBOX_KEY}`}
-      {...viewport}
-      onViewportChange={(
-        nextViewport: React.SetStateAction<{
-          width: number;
-          height: number;
-          latitude: number;
-          longitude: number;
-          zoom: number;
-        }>
-      ) => setViewport(nextViewport)}
-      attributionControl={false}
-      disableTokenWarning
-      reuseMaps
-    />
+    <div style={{ width: '100%', height: '100vh' }}>
+      <ReactMapGL
+        height="100%"
+        width="100%"
+        mapboxApiAccessToken={`${process.env.NEXT_PUBLIC_MAPBOX_KEY}`}
+        {...viewport}
+        onViewportChange={handleViewPort}
+        attributionControl={false}
+        disableTokenWarning
+        reuseMaps
+      />
+    </div>
   );
 };
 
 export default Home;
-
