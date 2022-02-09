@@ -10,6 +10,7 @@ import { getGlobalAmountDiff } from './functions/getGlobalAmountDiff';
 import styles from '../styles/Home.module.css';
 import SearchBar from './components/SearchBar';
 import StatisticCard from './components/StatisticCard';
+import BarChart from './components/BarChart';
 
 const Home: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -78,34 +79,26 @@ const Home: NextPage = () => {
         <div className={styles.grid}>
           <StatisticCard
             loading={globalLoading}
-            title="30 Days Cases"
+            title="30-Day Cases"
             data={globalDeaths30 ? globalCases30.amount : 0}
-            dataColor="#ff0000"
+            dataColor="#c84b31"
           />
           <StatisticCard
             loading={globalLoading}
-            title="30 Days Recovered"
+            title="30-Day Recovered"
             data={globalDeaths30 ? globalRecovered30.amount : 0}
-            dataColor="#ff0000"
+            dataColor="#458B00"
           />
           <StatisticCard
             loading={globalLoading}
-            title="30 Days Deaths"
+            title="30-Day Deaths"
             data={globalDeaths30 ? globalDeaths30.amount : 0}
             dataColor="#ff0000"
           />
         </div>
+        <BarChart data={getGlobalSpecific(globalData, 'cases', 100)} />
         <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by{' '}
-            <span className={styles.logo}>
-              <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-            </span>
-          </a>
+          <p style={{ color: '#c84b31' }}>Copyright &copy; Todor Vretenarov {new Date().getFullYear()}</p>
         </footer>
       </main>
     </div>
