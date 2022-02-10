@@ -73,7 +73,7 @@ const Home: NextPage = () => {
             loading={globalLoading}
             title="Global Deaths"
             data={globalDeaths ? globalDeaths[0].amount : 0}
-            dataColor="#ff0000"
+            dataColor="#C81E1E"
           />
         </div>
         <div className={styles.grid}>
@@ -93,10 +93,14 @@ const Home: NextPage = () => {
             loading={globalLoading}
             title="30-Day Deaths"
             data={globalDeaths30 ? globalDeaths30.amount : 0}
-            dataColor="#ff0000"
+            dataColor="#C81E1E"
           />
         </div>
-        <BarChart data={getGlobalSpecific(globalData, 'cases', 100)} />
+        <div style={{ display: 'flex' }}>
+          <BarChart data={getGlobalSpecific(globalData, 'cases', 'all')} />
+          <BarChart data={getGlobalSpecific(globalData, 'recovered', 'all')} />
+          <BarChart data={getGlobalSpecific(globalData, 'deaths', 'all')} />
+        </div>
         <footer className={styles.footer}>
           <p style={{ color: '#c84b31' }}>Copyright &copy; Todor Vretenarov {new Date().getFullYear()}</p>
         </footer>
