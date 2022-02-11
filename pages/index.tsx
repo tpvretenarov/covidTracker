@@ -11,6 +11,7 @@ import styles from '../styles/Home.module.css';
 import SearchBar from './components/SearchBar';
 import StatisticCard from './components/StatisticCard';
 import BarChart from './components/BarChart';
+import MultiBarChart from './components/MultiBarChart';
 
 const Home: NextPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -61,7 +62,7 @@ const Home: NextPage = () => {
             loading={globalLoading}
             title="Global Cases"
             data={globalCases ? globalCases[0].amount : 0}
-            dataColor="#c84b31"
+            dataColor="#ecdbba"
           />
           <StatisticCard
             loading={globalLoading}
@@ -81,7 +82,7 @@ const Home: NextPage = () => {
             loading={globalLoading}
             title="30-Day Cases"
             data={globalDeaths30 ? globalCases30.amount : 0}
-            dataColor="#c84b31"
+            dataColor="#ecdbba"
           />
           <StatisticCard
             loading={globalLoading}
@@ -96,10 +97,11 @@ const Home: NextPage = () => {
             dataColor="#C81E1E"
           />
         </div>
-        <div style={{ display: 'flex' }}>
-          <BarChart data={getGlobalSpecific(globalData, 'cases', 'all')} />
-          <BarChart data={getGlobalSpecific(globalData, 'recovered', 'all')} />
-          <BarChart data={getGlobalSpecific(globalData, 'deaths', 'all')} />
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+          {/* <BarChart type="Cases" data={getGlobalSpecific(globalData, 'cases', 'all')} />
+          <BarChart type="Recovered" data={getGlobalSpecific(globalData, 'recovered', 'all')} />
+          <BarChart type="Deaths" data={getGlobalSpecific(globalData, 'deaths', 'all')} /> */}
+          <MultiBarChart data={globalData} />
         </div>
         <footer className={styles.footer}>
           <p style={{ color: '#c84b31' }}>Copyright &copy; Todor Vretenarov {new Date().getFullYear()}</p>

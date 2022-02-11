@@ -1,14 +1,16 @@
 import React from 'react';
-import { BarChart as ChartBar, Label, XAxis, Tooltip, Bar } from 'recharts';
+import { BarChart as ChartBar, XAxis, Tooltip, Bar } from 'recharts';
+import styles from './BarChart.module.css';
 
 type BarChartType = {
   data: {
     date: string;
     amount: number;
   }[];
+  type: string;
 };
 
-const BarChart = ({ data }: BarChartType) => {
+const BarChart = ({ data, type }: BarChartType) => {
   const isError = data && data[0].date === 'API Error';
   const weeklyData = data
     .map((key, index, array) => {
@@ -26,35 +28,26 @@ const BarChart = ({ data }: BarChartType) => {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div
-          style={{
-            backgroundColor: '#2d4263',
-            color: '#ecdbba',
-            paddingLeft: '1rem',
-            paddingRight: '1rem',
-            paddingTop: '1px',
-            paddingBottom: '1px',
-            borderRadius: '5px',
-          }}
-        >
+        <div className={styles.tooltip}>
           <p>{`Date: ${label}`}</p>
           <p>{`Amount: ${payload[0].value.toLocaleString()}`}</p>
         </div>
       );
     }
-
     return null;
   };
+
   return (
-    <>
+    <div className={styles.barChartContainer}>
+      <div className={styles.barChartTitle}>Weekly {type}</div>
       {weeklyData && weeklyData.length && !isError && (
-        <ChartBar width={400} height={150} data={weeklyData}>
+        <ChartBar width={225} height={170} data={weeklyData}>
           <Tooltip content={<CustomTooltip />} />
-          <XAxis dataKey="date" />
+          <XAxis hide dataKey="date" />
           <Bar barSize={3} dataKey="Amount" fill="#c84b31" />
         </ChartBar>
       )}
-    </>
+    </div>
   );
 };
 
