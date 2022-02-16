@@ -35,6 +35,7 @@ const MultiBarChart = ({ data, type }: MultiBarChartType) => {
       }),
     [data]
   );
+
   const recoveredData = useMemo(
     () =>
       weeklyData(getGlobalSpecific(data, 'recovered', 'all')).map((key) => {
@@ -44,6 +45,7 @@ const MultiBarChart = ({ data, type }: MultiBarChartType) => {
       }),
     [data]
   );
+
   const deathsData = useMemo(
     () =>
       weeklyData(getGlobalSpecific(data, 'deaths', 'all')).map((key) => {
@@ -75,7 +77,7 @@ const MultiBarChart = ({ data, type }: MultiBarChartType) => {
       <div className={styles.barChartTitle}>Weekly {type}</div>
       {combinedData && combinedData.length && (
         <ChartBar width={800} height={170} data={combinedData}>
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip />
           <XAxis hide dataKey="date" />
           <Line dataKey="CasesAmount" fill="#ecdbba" />
           <Line dataKey="RecoveredAmount" fill="#458B00" />

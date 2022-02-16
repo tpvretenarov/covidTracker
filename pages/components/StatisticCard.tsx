@@ -15,7 +15,7 @@ const StatisticCard = ({ title, data, dataColor, loading }: StatisticCardType) =
       {loading && <span className={statisticStyles.loader} />}
       {!loading && (
         <>
-          <div style={{ color: '#fff' }}>{title}</div>
+          <div style={{ color: '#0b5394' }}>{title}</div>
           <div style={{ color: `${dataColor}`, fontSize: '30px', fontWeight: 'bold' }}>{data.toLocaleString()}</div>
         </>
       )}

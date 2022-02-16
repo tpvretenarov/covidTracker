@@ -13,7 +13,7 @@ const SearchBar = ({ setSearchTerm }: SearchBarType) => {
 
   return (
     <div className={styles.searchBarContainer}>
-      <h1 style={{ marginTop: 0, marginBottom: '1rem' }}>Worldwide Covid-19 Tracker</h1>
+      <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Worldwide Covid-19 Tracker</h1>
       <div className={styles.styledInputContainer}>
         <button className={styles.inputIcon} onClick={() => setSearchTerm(input)}>
           <i className="fas fa-search" />

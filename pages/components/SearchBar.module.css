@@ -7,32 +7,32 @@
 
 .styledInputContainer {
   position: relative;
-  margin: 0;
-  padding: 0;
+  margin-bottom: 0.5rem;
 }
 
 .styledInput {
   width: 200px;
   height: 40px;
   padding-left: 30px;
-  border-radius: 5px;
-  border: 1px solid #ecdbba;
-  background-color: #2d4263;
-  color: #ecdbba;
+  padding-top: 5px;
+  border: 1px solid #0b5394;
+  background-color: #d1cfcf;
+  color: #0b5394;
   font-size: 14px;
 }
 
 .styledInput::placeholder {
-  color: #ecdbba;
-  opacity: 0.7;
+  color: #0b5394;
+  opacity: 0.8;
 }
 
 .inputIcon {
   position: absolute;
-  color: #ecdbba;
-  background-color: #2d4263;
+  color: #0b5394;
+  background-color: #d1cfcf;
   width: 25px;
   height: 30px;
+  padding: 5px;
   top: 5px;
   left: 5px;
   border: 0;

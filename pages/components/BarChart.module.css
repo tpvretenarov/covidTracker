@@ -1,24 +1,36 @@
 .barChartContainer {
-  background-color: #313131;
-  /* border: 1px #fff solid;
-  border-radius: 10px; */
+  width: 100%;
+  background-color: #d1cfcf;
   padding: 5px;
   margin: 8px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+  border: 1px #d1cfcf solid;
+}
+
+.barChartContainer:hover,
+.barChartContainer:focus,
+.barChartContainer:active {
+  color: #d1cfcf;
+  border-color: #0b5394;
 }
 
 .barChartTitle {
   text-align: center;
-  color: #fff;
-  margin-top: 0.25rem;
-  margin-bottom: 0.25rem;
+  color: #0b5394;
+  padding-top: 1rem;
+  font-family: 'Roboto Serif', sans-serif;
+  font-size: 16px;
 }
 
 .tooltip {
-  background-color: #191919;
-  color: #ecdbba;
-  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f3f6f4;
+  color: #0b5394;
+  padding-top: 1rem;
   padding-right: 1rem;
-  padding-top: 1px;
-  padding-bottom: 1px;
+  padding-left: 1rem;
   border-radius: 5px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
 }

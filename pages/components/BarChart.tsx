@@ -1,6 +1,8 @@
 import React from 'react';
-import { BarChart as ChartBar, XAxis, Tooltip, Bar } from 'recharts';
+import { BarChart as ChartBar, XAxis, Tooltip, Bar, ResponsiveContainer, YAxis } from 'recharts';
 import styles from './BarChart.module.css';
+import { getGlobalWeekly } from '../functions/getGlobalWeekly';
+import { numFormatter } from '../functions/numFormatter';
 
 type BarChartType = {
   data: {
@@ -10,20 +12,15 @@ type BarChartType = {
   type: string;
 };
 
+const colorMap: { [key: string]: string } = {
+  Cases: '#f3f6f4',
+  Recovered: '#458B00',
+  Deaths: '#C81E1E',
+};
+
 const BarChart = ({ data, type }: BarChartType) => {
   const isError = data && data[0].date === 'API Error';
-  const weeklyData = data
-    .map((key, index, array) => {
-      let value;
-      value = {
-        date: key.date,
-        Amount: (array[index - 1] ? array[index - 1].amount : 0) + key.amount,
-      };
-      if (index % 7 === 0) {
-        return value;
-      }
-    })
-    .filter(Boolean);
+  const weeklyData = getGlobalWeekly(data);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -41,11 +38,14 @@ const BarChart = ({ data, type }: BarChartType) => {
     <div className={styles.barChartContainer}>
       <div className={styles.barChartTitle}>Weekly {type}</div>
       {weeklyData && weeklyData.length && !isError && (
-        <ChartBar width={225} height={170} data={weeklyData}>
-          <Tooltip content={<CustomTooltip />} />
-          <XAxis hide dataKey="date" />
-          <Bar barSize={3} dataKey="Amount" fill="#c84b31" />
-        </ChartBar>
+        <ResponsiveContainer width="100%" height={200}>
+          <ChartBar data={weeklyData}>
+            <Tooltip cursor={{ fill: 'rgba(11, 83, 148, 0.3)' }} content={<CustomTooltip />} />
+            <XAxis dataKey="date" />
+            <YAxis tickFormatter={(value) => numFormatter(value)} />
+            <Bar barSize={10} dataKey="Amount" fill={colorMap[type]} />
+          </ChartBar>
+        </ResponsiveContainer>
       )}
     </div>
   );
