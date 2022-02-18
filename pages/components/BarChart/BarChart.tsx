@@ -1,14 +1,16 @@
 import React from 'react';
 import { BarChart as ChartBar, XAxis, Tooltip, Bar, ResponsiveContainer, YAxis } from 'recharts';
 import styles from './BarChart.module.css';
-import { getGlobalWeekly } from '../functions/getGlobalWeekly';
-import { numFormatter } from '../functions/numFormatter';
+import { getGlobalWeekly } from '../../functions/getGlobalWeekly';
+import { numFormatter } from '../../functions/numFormatter';
 
 type BarChartType = {
-  data: {
-    date: string;
-    amount: number;
-  }[];
+  data:
+    | {
+        date: string;
+        amount: number;
+      }[]
+    | undefined;
   type: string;
 };
 
@@ -20,7 +22,7 @@ const colorMap: { [key: string]: string } = {
 
 const BarChart = ({ data, type }: BarChartType) => {
   const isError = data && data[0].date === 'API Error';
-  const weeklyData = getGlobalWeekly(data);
+  const weeklyData = data && getGlobalWeekly(data);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

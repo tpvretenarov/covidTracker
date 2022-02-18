@@ -2,22 +2,21 @@ import { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { GlobalData, CountryData } from './types';
-import fetchCountry from './hooks/fetchCountry';
 import fetchGlobal from './hooks/fetchGlobal';
 import { getGlobalSpecific } from './functions/getGlobalSpecific';
+import { getCountrySpecific } from './functions/getCountrySpecific';
 import styles from '../styles/Home.module.css';
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import Statistics from './components/Statistics';
-import StatisticCard from './components/StatisticCard';
-import BarChart from './components/BarChart';
+import BarChart from './components/BarChart/BarChart';
 import MultiBarChart from './components/MultiBarChart';
 
 const Home: NextPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [globalData, setGlobalData] = useState<GlobalData>();
   const [globalLoading, setGlobalLoading] = useState(false);
   const [countryData, setCountryData] = useState<CountryData>();
   const [countryLoading, setCountryLoading] = useState(false);
+  const [countryError, setCountryError] = useState(false);
 
   // fetch global data on initial load
   useEffect(() => {
@@ -31,10 +30,59 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // fetch country specific data if queried
-  useEffect(() => {
-    searchTerm.length > 0 && fetchCountry(searchTerm).then((res) => res && setCountryData(res));
-  }, [searchTerm]);
+  const globalCasesData = useMemo(() => {
+    const data = getGlobalSpecific(globalData, 'cases', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [globalData]);
+
+  const globalRecoveredData = useMemo(() => {
+    const data = getGlobalSpecific(globalData, 'recovered', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [globalData]);
+
+  const globalDeathData = useMemo(() => {
+    const data = getGlobalSpecific(globalData, 'deaths', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [globalData]);
+
+  const countryCasesData = useMemo(() => {
+    const data = getCountrySpecific(countryData, 'cases', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [countryData]);
+
+  const countryRecoveredData = useMemo(() => {
+    const data = getCountrySpecific(countryData, 'recovered', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [countryData]);
+
+  const countryDeathData = useMemo(() => {
+    const data = getCountrySpecific(countryData, 'deaths', 'all');
+    if (data?.length && data[0].date === 'API Error') {
+      return undefined;
+    } else {
+      return data;
+    }
+  }, [countryData]);
 
   return (
     <div className={styles.container}>
@@ -47,23 +95,35 @@ const Home: NextPage = () => {
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossOrigin="anonymous"
-        ></link>
+        />
       </Head>
       <main>
         <div className="container">
-          <SearchBar setSearchTerm={setSearchTerm} />
+          <SearchBar
+            setCountryError={setCountryError}
+            setCountryData={setCountryData}
+            setCountryLoading={setCountryLoading}
+            countryData={countryData}
+            countryError={countryError}
+          />
           <div className="row justify-content-center flex-wrap">
-            <Statistics globalData={globalData} globalLoading={globalLoading} />
+            <Statistics
+              countryData={countryData}
+              countryLoading={countryLoading}
+              countryError={countryError}
+              globalData={globalData}
+              globalLoading={globalLoading}
+            />
           </div>
           <div className="row flex-wrap">
             <div className="col xs-12  justify-content-center">
-              <BarChart type="Cases" data={getGlobalSpecific(globalData, 'cases', 'all')} />
+              <BarChart type="Cases" data={countryCasesData || globalCasesData} />
             </div>
             <div className="col xs-12  justify-content-center">
-              <BarChart type="Recovered" data={getGlobalSpecific(globalData, 'recovered', 'all')} />
+              <BarChart type="Recovered" data={countryRecoveredData || globalRecoveredData} />
             </div>
             <div className="col xs-12  justify-content-center">
-              <BarChart type="Deaths" data={getGlobalSpecific(globalData, 'deaths', 'all')} />
+              <BarChart type="Deaths" data={countryDeathData || globalDeathData} />
             </div>
             {/* <MultiBarChart data={globalData} /> */}
           </div>

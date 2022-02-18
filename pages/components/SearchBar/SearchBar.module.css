@@ -21,9 +21,31 @@
   font-size: 14px;
 }
 
+.styledInput:active,
+.styledInput:focus {
+  border: 1px solid #0b5394 !important;
+  outline: none !important;
+}
+
 .styledInput::placeholder {
   color: #0b5394;
   opacity: 0.8;
+}
+
+.inputBackButton {
+  padding-top: 5px;
+  font-size: 14px;
+  height: 40px;
+  border: 1px solid #0b5394;
+  background-color: #d1cfcf;
+  color: #0b5394;
+  cursor: pointer;
+}
+
+.inputBackButton:active,
+.inputBackButton:focus {
+  border: 1px solid #0b5394;
+  outline: none !important;
 }
 
 .inputIcon {

@@ -1,65 +1,95 @@
 import { useMemo } from 'react';
 import { getGlobalSpecific } from '../functions/getGlobalSpecific';
 import { getGlobalAmountDiff } from '../functions/getGlobalAmountDiff';
-import StatisticCard from './StatisticCard';
-import { GlobalData } from '../types';
+import { getCountrySpecific } from '../functions/getCountrySpecific';
+import StatisticCard from './StatisticCard/StatisticCard';
+import { GlobalData, CountryData } from '../types';
 
 type StatisticsType = {
   globalData: GlobalData | undefined;
   globalLoading: boolean;
+  countryData: CountryData | undefined;
+  countryLoading: boolean;
+  countryError: boolean;
 };
 
-const Statistics = ({ globalData, globalLoading }: StatisticsType) => {
-  const globalDeaths = useMemo(() => getGlobalSpecific(globalData, 'deaths', 1), [globalData]);
+const Statistics = ({ globalData, globalLoading, countryData, countryLoading, countryError }: StatisticsType) => {
   const globalCases = useMemo(() => getGlobalSpecific(globalData, 'cases', 1), [globalData]);
+  const globalDeaths = useMemo(() => getGlobalSpecific(globalData, 'deaths', 1), [globalData]);
   const globalRecovered = useMemo(() => getGlobalSpecific(globalData, 'recovered', 1), [globalData]);
 
-  const globalDeaths30 = useMemo(() => getGlobalAmountDiff(getGlobalSpecific(globalData, 'deaths', 31)), [globalData]);
   const globalCases30 = useMemo(() => getGlobalAmountDiff(getGlobalSpecific(globalData, 'cases', 31)), [globalData]);
+  const globalDeaths30 = useMemo(() => getGlobalAmountDiff(getGlobalSpecific(globalData, 'deaths', 31)), [globalData]);
   const globalRecovered30 = useMemo(
     () => getGlobalAmountDiff(getGlobalSpecific(globalData, 'recovered', 31)),
     [globalData]
+  );
+
+  const countryCases = useMemo(
+    () => !countryError && getCountrySpecific(countryData, 'cases', 1),
+    [countryData, countryError]
+  );
+  const countryDeaths = useMemo(
+    () => !countryError && getCountrySpecific(countryData, 'deaths', 1),
+    [countryData, countryError]
+  );
+  const countryRecovered = useMemo(
+    () => !countryError && getCountrySpecific(countryData, 'recovered', 1),
+    [countryData, countryError]
+  );
+
+  const countryCases30 = useMemo(
+    () => !countryError && getGlobalAmountDiff(getCountrySpecific(countryData, 'cases', 31)),
+    [countryData, countryError]
+  );
+  const countryDeaths30 = useMemo(
+    () => !countryError && getGlobalAmountDiff(getCountrySpecific(countryData, 'deaths', 31)),
+    [countryData, countryError]
+  );
+  const countryRecovered30 = useMemo(
+    () => !countryError && getGlobalAmountDiff(getCountrySpecific(countryData, 'recovered', 31)),
+    [countryData, countryError]
   );
 
   return (
     <>
       <div className="d-flex justify-content-center flex-wrap">
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="Global Cases"
-          data={globalCases ? globalCases[0].amount : 0}
+          data={(countryCases && countryCases[0].amount) || globalCases[0].amount}
           dataColor="#f3f6f4"
         />
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="Global Recovered"
-          data={globalRecovered ? globalRecovered[0].amount : 0}
+          data={(countryRecovered && countryRecovered[0].amount) || globalRecovered[0].amount}
           dataColor="#458B00"
         />
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="Global Deaths"
-          data={globalDeaths ? globalDeaths[0].amount : 0}
+          data={(countryDeaths && countryDeaths[0].amount) || globalDeaths[0].amount}
           dataColor="#C81E1E"
         />
       </div>
       <div className="d-flex justify-content-center flex-wrap">
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="30-Day Cases"
-          data={globalDeaths30 ? globalCases30.amount : 0}
+          data={(countryCases30 && countryCases30.amount) || globalCases30.amount}
           dataColor="#f3f6f4"
         />
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="30-Day Recovered"
-          data={globalDeaths30 ? globalRecovered30.amount : 0}
+          data={(countryDeaths30 && countryDeaths30.amount) || globalRecovered30.amount}
           dataColor="#458B00"
         />
         <StatisticCard
-          loading={globalLoading}
+          loading={countryLoading || globalLoading}
           title="30-Day Deaths"
-          data={globalDeaths30 ? globalDeaths30.amount : 0}
+          data={(countryRecovered30 && countryRecovered30.amount) || globalDeaths30.amount}
           dataColor="#C81E1E"
         />
       </div>
