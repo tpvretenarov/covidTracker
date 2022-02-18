@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { GlobalData, CountryData } from './types';
-import fetchGlobal from './hooks/fetchGlobal';
+import fetchGlobal from './functions/fetchGlobal';
 import { getGlobalSpecific } from './functions/getGlobalSpecific';
 import { getCountrySpecific } from './functions/getCountrySpecific';
 import styles from '../styles/Home.module.css';
