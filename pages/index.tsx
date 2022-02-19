@@ -9,7 +9,6 @@ import styles from '../styles/Home.module.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import Statistics from './components/Statistics';
 import BarChart from './components/BarChart/BarChart';
-import MultiBarChart from './components/MultiBarChart';
 
 const Home: NextPage = () => {
   const [globalData, setGlobalData] = useState<GlobalData>();
@@ -125,7 +124,6 @@ const Home: NextPage = () => {
             <div className="col xs-12  justify-content-center">
               <BarChart type="Deaths" data={countryDeathData || globalDeathData} />
             </div>
-            {/* <MultiBarChart data={globalData} /> */}
           </div>
         </div>
         <footer className={styles.footer}>
