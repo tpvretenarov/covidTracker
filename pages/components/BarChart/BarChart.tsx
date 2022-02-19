@@ -1,8 +1,8 @@
 import React from 'react';
 import { BarChart as ChartBar, XAxis, Tooltip, Bar, ResponsiveContainer, YAxis } from 'recharts';
 import styles from './BarChart.module.css';
-import { getGlobalWeekly } from '../../functions/getGlobalWeekly';
-import { numFormatter } from '../../functions/numFormatter';
+import { getGlobalWeekly } from '../../../functions/getGlobalWeekly';
+import { numFormatter } from '../../../functions/numFormatter';
 
 type BarChartType = {
   data:

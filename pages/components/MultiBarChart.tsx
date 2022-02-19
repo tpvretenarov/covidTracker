@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { LineChart as ChartBar, XAxis, Tooltip, Bar, Line } from 'recharts';
 import styles from './BarChart.module.css';
-import { GlobalData } from '../types';
-import { getGlobalSpecific } from '../functions/getGlobalSpecific';
+import { GlobalData } from '../../types';
+import { getGlobalSpecific } from '../../functions/getGlobalSpecific';
 
 type MultiBarChartType = {
   data: GlobalData | undefined;

@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { getGlobalSpecific } from '../functions/getGlobalSpecific';
-import { getGlobalAmountDiff } from '../functions/getGlobalAmountDiff';
-import { getCountrySpecific } from '../functions/getCountrySpecific';
+import { getGlobalSpecific } from '../../functions/getGlobalSpecific';
+import { getGlobalAmountDiff } from '../../functions/getGlobalAmountDiff';
+import { getCountrySpecific } from '../../functions/getCountrySpecific';
 import StatisticCard from './StatisticCard/StatisticCard';
-import { GlobalData, CountryData } from '../types';
+import { GlobalData, CountryData } from '../../types';
 
 type StatisticsType = {
   globalData: GlobalData | undefined;

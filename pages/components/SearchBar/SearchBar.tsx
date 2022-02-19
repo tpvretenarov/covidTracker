@@ -1,6 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { CountryData } from '../../types';
-import fetchCountry from '../../functions/fetchCountry';
+import { CountryData } from '../../../types';
+import fetchCountry from '../../../functions/fetchCountry';
 import styles from './SearchBar.module.css';
 
 type SearchBarType = {
