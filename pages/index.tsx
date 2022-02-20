@@ -38,14 +38,14 @@ const Home: NextPage = () => {
     }
   }, [globalData]);
 
-  const globalRecoveredData = useMemo(() => {
-    const data = getGlobalSpecific(globalData, 'recovered', 'all');
-    if (data?.length && data[0].date === 'API Error') {
-      return undefined;
-    } else {
-      return data;
-    }
-  }, [globalData]);
+  // const globalRecoveredData = useMemo(() => {
+  //   const data = getGlobalSpecific(globalData, 'recovered', 'all');
+  //   if (data?.length && data[0].date === 'API Error') {
+  //     return undefined;
+  //   } else {
+  //     return data;
+  //   }
+  // }, [globalData]);
 
   const globalDeathData = useMemo(() => {
     const data = getGlobalSpecific(globalData, 'deaths', 'all');
@@ -65,14 +65,14 @@ const Home: NextPage = () => {
     }
   }, [countryData]);
 
-  const countryRecoveredData = useMemo(() => {
-    const data = getCountrySpecific(countryData, 'recovered', 'all');
-    if (data?.length && data[0].date === 'API Error') {
-      return undefined;
-    } else {
-      return data;
-    }
-  }, [countryData]);
+  // const countryRecoveredData = useMemo(() => {
+  //   const data = getCountrySpecific(countryData, 'recovered', 'all');
+  //   if (data?.length && data[0].date === 'API Error') {
+  //     return undefined;
+  //   } else {
+  //     return data;
+  //   }
+  // }, [countryData]);
 
   const countryDeathData = useMemo(() => {
     const data = getCountrySpecific(countryData, 'deaths', 'all');
@@ -97,33 +97,38 @@ const Home: NextPage = () => {
         />
       </Head>
       <main>
-        <div className="container">
+        <div className="d-flex flex-wrap justify-content-center m-0 p-0">
           <SearchBar
-            setCountryError={setCountryError}
             setCountryData={setCountryData}
             setCountryLoading={setCountryLoading}
+            setCountryError={setCountryError}
             countryData={countryData}
+            countryLoading={countryLoading}
             countryError={countryError}
           />
-          <div className="row justify-content-center flex-wrap">
-            <Statistics
-              countryData={countryData}
-              countryLoading={countryLoading}
-              countryError={countryError}
-              globalData={globalData}
-              globalLoading={globalLoading}
+          <Statistics
+            countryData={countryData}
+            countryLoading={countryLoading}
+            countryError={countryError}
+            globalData={globalData}
+            globalLoading={globalLoading}
+          />
+          <div className="row flex-wrap mx-1">
+            <BarChart
+              type="Cases"
+              data={countryCasesData || globalCasesData}
+              loading={countryLoading || globalLoading}
             />
-          </div>
-          <div className="row flex-wrap">
-            <div className="col xs-12  justify-content-center">
-              <BarChart type="Cases" data={countryCasesData || globalCasesData} />
-            </div>
-            <div className="col xs-12  justify-content-center">
-              <BarChart type="Recovered" data={countryRecoveredData || globalRecoveredData} />
-            </div>
-            <div className="col xs-12  justify-content-center">
-              <BarChart type="Deaths" data={countryDeathData || globalDeathData} />
-            </div>
+            {/* <BarChart
+              type="Recovered"
+              data={countryRecoveredData || globalRecoveredData}
+              loading={countryLoading || globalLoading}
+            /> */}
+            <BarChart
+              type="Deaths"
+              data={countryDeathData || globalDeathData}
+              loading={countryLoading || globalLoading}
+            />
           </div>
         </div>
         <footer className={styles.footer}>

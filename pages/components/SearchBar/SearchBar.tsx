@@ -8,6 +8,7 @@ type SearchBarType = {
   setCountryLoading: Dispatch<SetStateAction<boolean>>;
   setCountryError: Dispatch<SetStateAction<boolean>>;
   countryData: CountryData | undefined;
+  countryLoading: boolean;
   countryError: boolean;
 };
 
@@ -16,20 +17,24 @@ const SearchBar = ({
   setCountryLoading,
   setCountryError,
   countryData,
+  countryLoading,
   countryError,
 }: SearchBarType) => {
   const [input, setInput] = useState('');
-  const handleEnter = (key: React.KeyboardEvent<HTMLInputElement>) => {
-    if (key.code === 'Enter' && input.length > 0) {
+
+  const handleSearch = () => {
+    if (input.length > 0) {
       setCountryLoading(true);
       fetchCountry(input)
         .then((res) => {
           if (!res) {
             setCountryLoading(false);
             setCountryError(true);
+            setInput('');
           } else if (res === 'Invalid Country') {
             setCountryLoading(false);
             setCountryError(true);
+            setInput('');
           } else {
             setCountryLoading(false);
             setCountryError(false);
@@ -43,31 +48,16 @@ const SearchBar = ({
     }
   };
 
+  const handleEnter = (key: React.KeyboardEvent<HTMLInputElement>) => {
+    if (key.code === 'Enter' && input.length > 0) {
+      handleSearch();
+    }
+  };
+
   return (
-    <div className={styles.searchBarContainer}>
-      <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>Worldwide Covid-19 Tracker</h1>
+    <div className={`${styles.searchBarContainer} text-center col-xs-12 col-md-4`}>
+      <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem', fontSize: '1.5em' }}>Worldwide Covid-19 Tracker</h1>
       <div className={styles.styledInputContainer}>
-        <button
-          style={{
-            backgroundColor: countryError ? 'transparent' : undefined,
-          }}
-          className={styles.inputIcon}
-          onClick={() => setInput(input)}
-        >
-          <i className="fas fa-search" />
-        </button>
-        <input
-          style={{
-            backgroundColor: countryError ? 'rgba(247,15,0, 0.2)' : undefined,
-          }}
-          className={styles.styledInput}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleEnter}
-          value={input}
-          type="text"
-          placeholder="Search a country"
-        />
-        {countryError && <i style={{ color: 'rgba(247,15,0, 0.6)' }} className="fa-solid fa-circle-exclamation ml-1" />}
         {!countryError && countryData?.country.length && (
           <button
             className={styles.inputBackButton}
@@ -77,9 +67,27 @@ const SearchBar = ({
             }}
           >
             <i className="fa-solid fa-angle-left"></i>
-            &nbsp;Global
           </button>
         )}
+        <input
+          style={{
+            backgroundColor: countryError ? 'rgba(247,15,0, 0.2)' : undefined,
+          }}
+          className={styles.styledInput}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleEnter}
+          value={input}
+          type="text"
+          placeholder={!countryError ? 'Search a country' : 'Invalid country'}
+        />
+        <div tabIndex={0} className={styles.inputSearchButton} onKeyDown={handleEnter} onClick={handleSearch}>
+          {!countryLoading ? (
+            <i className="fas fa-search" />
+          ) : (
+            <span style={{ width: '25px', height: '25px', borderColor: '#0b5394 transparent' }} className="loader" />
+          )}
+        </div>
+        {countryError && <i style={{ color: 'rgba(247,15,0, 0.6)' }} className="fa-solid fa-circle-exclamation ml-1" />}
       </div>
     </div>
   );

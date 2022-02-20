@@ -5,16 +5,23 @@
   align-items: center;
 }
 
+/* Container */
+
 .styledInputContainer {
   position: relative;
   margin-bottom: 0.5rem;
+  height: 40px;
+  width: 100%;
+  display: flex;
 }
 
+/* Input */
+
 .styledInput {
-  width: 200px;
-  height: 40px;
-  padding-left: 30px;
-  padding-top: 5px;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 7px;
   border: 1px solid #0b5394;
   background-color: #d1cfcf;
   color: #0b5394;
@@ -23,8 +30,8 @@
 
 .styledInput:active,
 .styledInput:focus {
-  border: 1px solid #0b5394 !important;
-  outline: none !important;
+  border: 1px solid #0b5394;
+  outline: none;
 }
 
 .styledInput::placeholder {
@@ -32,39 +39,58 @@
   opacity: 0.8;
 }
 
+/* Back to global data Button */
+
 .inputBackButton {
-  padding-top: 5px;
   font-size: 14px;
-  height: 40px;
+  height: 100%;
+  width: 50px;
+  padding-top: 5px;
   border: 1px solid #0b5394;
+  border-right: transparent;
   background-color: #d1cfcf;
   color: #0b5394;
   cursor: pointer;
+}
+
+.inputBackButton:hover {
+  background-color: #0b5394;
+  color: #d1cfcf;
 }
 
 .inputBackButton:active,
 .inputBackButton:focus {
+  border: 1px solid #2584ff;
+  background-color: #0b5394;
+  color: #d1cfcf;
+  outline: none;
+}
+
+/* Search Button */
+
+.inputSearchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  height: 100%;
+  width: 60px;
   border: 1px solid #0b5394;
-  outline: none !important;
-}
-
-.inputIcon {
-  position: absolute;
-  color: #0b5394;
+  border-left: transparent;
   background-color: #d1cfcf;
-  width: 25px;
-  height: 30px;
-  padding: 5px;
-  top: 5px;
-  left: 5px;
-  border: 0;
-}
-
-.inputIcon:hover {
+  color: #0b5394;
   cursor: pointer;
 }
 
-.inputIcon:active {
-  border: 1px solid #ecdbba;
-  border-radius: 5px;
+.inputSearchButton:hover {
+  background-color: #0b5394;
+  color: #d1cfcf;
+}
+
+.inputSearchButton:active,
+.inputSearchButton:focus {
+  border: 1px solid #2584ff;
+  background-color: #0b5394;
+  color: #d1cfcf;
+  outline: none;
 }

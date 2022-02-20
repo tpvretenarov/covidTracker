@@ -52,48 +52,44 @@ const Statistics = ({ globalData, globalLoading, countryData, countryLoading, co
   );
 
   return (
-    <>
-      <div className="d-flex justify-content-center flex-wrap">
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="Global Cases"
-          data={(countryCases && countryCases[0].amount) || globalCases[0].amount}
-          dataColor="#f3f6f4"
-        />
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="Global Recovered"
-          data={(countryRecovered && countryRecovered[0].amount) || globalRecovered[0].amount}
-          dataColor="#458B00"
-        />
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="Global Deaths"
-          data={(countryDeaths && countryDeaths[0].amount) || globalDeaths[0].amount}
-          dataColor="#C81E1E"
-        />
-      </div>
-      <div className="d-flex justify-content-center flex-wrap">
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="30-Day Cases"
-          data={(countryCases30 && countryCases30.amount) || globalCases30.amount}
-          dataColor="#f3f6f4"
-        />
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="30-Day Recovered"
-          data={(countryDeaths30 && countryDeaths30.amount) || globalRecovered30.amount}
-          dataColor="#458B00"
-        />
-        <StatisticCard
-          loading={countryLoading || globalLoading}
-          title="30-Day Deaths"
-          data={(countryRecovered30 && countryRecovered30.amount) || globalDeaths30.amount}
-          dataColor="#C81E1E"
-        />
-      </div>
-    </>
+    <div className="d-flex justify-content-center flex-wrap mb-2 w-100">
+      <StatisticCard
+        loading={countryLoading || globalLoading}
+        title={`${countryData ? countryData.country : 'Global'} Cases`}
+        data={(countryCases && countryCases[0].amount) || globalCases[0].amount}
+        dataColor="#1966ca"
+      />
+      {/* <StatisticCard
+        loading={countryLoading || globalLoading}
+        title="Global Recovered"
+        data={(countryRecovered && countryRecovered[0].amount) || globalRecovered[0].amount}
+        dataColor="#458B00"
+      /> */}
+      <StatisticCard
+        loading={countryLoading || globalLoading}
+        title={`${countryData ? countryData.country : 'Global'} Deaths`}
+        data={(countryDeaths && countryDeaths[0].amount) || globalDeaths[0].amount}
+        dataColor="#C81E1E"
+      />
+      <StatisticCard
+        loading={countryLoading || globalLoading}
+        title={`${countryData ? countryData.country : 'Global'} 30-Day Cases`}
+        data={(countryCases30 && countryCases30.amount) || globalCases30.amount}
+        dataColor="#1966ca"
+      />
+      {/* <StatisticCard
+        loading={countryLoading || globalLoading}
+        title="30-Day Recovered"
+        data={(countryDeaths30 && countryDeaths30.amount) || globalRecovered30.amount}
+        dataColor="#458B00"
+      /> */}
+      <StatisticCard
+        loading={countryLoading || globalLoading}
+        title={`${countryData ? countryData.country : 'Global'} 30-Day Deaths`}
+        data={(countryRecovered30 && countryRecovered30.amount) || globalDeaths30.amount}
+        dataColor="#C81E1E"
+      />
+    </div>
   );
 };
 

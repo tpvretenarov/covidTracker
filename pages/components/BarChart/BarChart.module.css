@@ -1,8 +1,7 @@
 .barChartContainer {
   width: 100%;
   background-color: #d1cfcf;
-  padding: 5px;
-  margin: 8px;
+  margin-bottom: 1rem;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
   border: 1px #d1cfcf solid;
 }
@@ -19,7 +18,7 @@
   color: #0b5394;
   padding-top: 1rem;
   font-family: 'Roboto Serif', sans-serif;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .tooltip {

@@ -12,15 +12,16 @@ type BarChartType = {
       }[]
     | undefined;
   type: string;
+  loading: boolean;
 };
 
 const colorMap: { [key: string]: string } = {
-  Cases: '#f3f6f4',
+  Cases: '#1966ca',
   Recovered: '#458B00',
   Deaths: '#C81E1E',
 };
 
-const BarChart = ({ data, type }: BarChartType) => {
+const BarChart = ({ data, type, loading }: BarChartType) => {
   const isError = data && data[0].date === 'API Error';
   const weeklyData = data && getGlobalWeekly(data);
 
@@ -37,19 +38,26 @@ const BarChart = ({ data, type }: BarChartType) => {
   };
 
   return (
-    <div className={styles.barChartContainer}>
-      <div className={styles.barChartTitle}>Weekly {type}</div>
-      {weeklyData && weeklyData.length && !isError && (
-        <ResponsiveContainer width="100%" height={200}>
-          <ChartBar data={weeklyData}>
-            <Tooltip cursor={{ fill: 'rgba(11, 83, 148, 0.3)' }} content={<CustomTooltip />} />
-            <XAxis dataKey="date" />
-            <YAxis tickFormatter={(value) => numFormatter(value)} />
-            <Bar barSize={10} dataKey="Amount" fill={colorMap[type]} />
-          </ChartBar>
-        </ResponsiveContainer>
+    <>
+      {loading && (
+        <div className="d-flex justify-content-center align-items-center w-100" style={{ height: '242px' }}>
+          <div className="loader" />
+        </div>
       )}
-    </div>
+      {weeklyData && weeklyData.length && !loading && !isError && (
+        <div className={styles.barChartContainer}>
+          <div className={styles.barChartTitle}>Weekly {type}</div>
+          <ResponsiveContainer width="100%" height={200}>
+            <ChartBar data={weeklyData}>
+              <Tooltip cursor={{ fill: 'rgba(11, 83, 148, 0.3)' }} content={<CustomTooltip />} />
+              <XAxis dataKey="date" />
+              <YAxis tickFormatter={(value) => numFormatter(value)} />
+              <Bar barSize={10} dataKey="Amount" fill={colorMap[type]} />
+            </ChartBar>
+          </ResponsiveContainer>
+        </div>
+      )}
+    </>
   );
 };
 
