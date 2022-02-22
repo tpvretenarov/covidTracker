@@ -1,10 +1,11 @@
 import { useState, useEffect, useMemo } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { GlobalData, CountryData } from '../types';
+import { GlobalData, CountryData, AllCountryData } from '../types';
 import fetchGlobal from '../functions/fetchGlobal';
-import { getGlobalSpecific } from '../functions/getGlobalSpecific';
-import { getCountrySpecific } from '../functions/getCountrySpecific';
+import fetchAllCountries from '../functions/fetchAllCountries';
+import getGlobalSpecific from '../functions/getGlobalSpecific';
+import getCountrySpecific from '../functions/getCountrySpecific';
 import styles from '../styles/Home.module.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import Statistics from './components/Statistics';
@@ -13,11 +14,17 @@ import BarChart from './components/BarChart/BarChart';
 const Home: NextPage = () => {
   const [globalData, setGlobalData] = useState<GlobalData>();
   const [globalLoading, setGlobalLoading] = useState(false);
+
   const [countryData, setCountryData] = useState<CountryData>();
   const [countryLoading, setCountryLoading] = useState(false);
   const [countryError, setCountryError] = useState(false);
 
-  // fetch global data on initial load
+  const [allCountriesData, setAllCountriesData] = useState<AllCountryData>();
+  const [allCountriesLoading, setAllCountriesLoading] = useState(false);
+
+  const [countryList, setCountryList] = useState<{ country: string; updated: string }[] | undefined>();
+
+  // fetch global historical data on initial load
   useEffect(() => {
     setGlobalLoading(true);
     fetchGlobal().then((res) => {
@@ -28,6 +35,33 @@ const Home: NextPage = () => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // fetch all country data on initial load
+  useEffect(() => {
+    setAllCountriesLoading(true);
+    fetchAllCountries().then((res) => {
+      if (res) {
+        setAllCountriesLoading(false);
+        setAllCountriesData(res);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (allCountriesData && allCountriesData.length > 0) {
+      const countryListData = allCountriesData.map((key) => {
+        if (key.country && key.updatedAt) {
+          return { country: key.country, updated: key.updatedAt };
+        }
+        return { country: '', updated: '' };
+      });
+      setCountryList(
+        // remove duplicates
+        countryListData.filter((value, index, self) => index === self.findIndex((t) => t.country === value.country))
+      );
+    }
+  }, [allCountriesData]);
 
   const globalCasesData = useMemo(() => {
     const data = getGlobalSpecific(globalData, 'cases', 'all');
@@ -87,6 +121,7 @@ const Home: NextPage = () => {
             countryData={countryData}
             countryLoading={countryLoading}
             countryError={countryError}
+            countryList={countryList}
           />
           <Statistics
             countryData={countryData}

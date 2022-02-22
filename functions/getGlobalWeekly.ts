@@ -1,4 +1,4 @@
-export const getGlobalWeekly = (data: { date: string; amount: number }[]) => {
+const getGlobalWeekly = (data: { date: string; amount: number }[]) => {
   return data
     .map((key, index, array) => {
       const day = new Date(key.date).getDay(); // every monday
@@ -9,3 +9,5 @@ export const getGlobalWeekly = (data: { date: string; amount: number }[]) => {
     .filter(Boolean);
 };
 // extracts data every monday showcase weekly data
+
+export default getGlobalWeekly;

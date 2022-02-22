@@ -3,7 +3,7 @@ import styles from '../../../styles/Home.module.css';
 
 type StatisticCardType = {
   title: string;
-  data: number;
+  data: number | string;
   dataColor: string;
   loading: boolean;
 };

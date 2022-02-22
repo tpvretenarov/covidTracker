@@ -1,6 +1,6 @@
 import { CountryData } from '../types';
 
-export const getCountrySpecific = (
+const getCountrySpecific = (
   data: CountryData | 'API Error' | undefined,
   type: 'cases' | 'deaths' | 'recovered',
   days: number | 'all'
@@ -13,5 +13,7 @@ export const getCountrySpecific = (
       .filter(({ date, amount }) => date !== 'undefined' && amount !== 0)
       .slice(days === 'all' ? undefined : -days);
   }
-  return [{ date: 'API Error', amount: 0 }];
+  return null;
 };
+
+export default getCountrySpecific;

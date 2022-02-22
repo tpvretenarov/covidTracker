@@ -1,6 +1,6 @@
 import { GlobalData } from '../types';
 
-export const getGlobalSpecific = (
+const getGlobalSpecific = (
   data: GlobalData | 'API Error' | undefined,
   type: 'cases' | 'deaths' | 'recovered',
   days: number | 'all'
@@ -15,3 +15,5 @@ export const getGlobalSpecific = (
   }
   return [{ date: 'API Error', amount: 0 }];
 };
+
+export default getGlobalSpecific;

@@ -1,4 +1,4 @@
-export const getGlobalAmountDiff = (
+const getGlobalAmountDiff = (
   data: {
     date: string;
     amount: number;
@@ -9,3 +9,5 @@ export const getGlobalAmountDiff = (
   }
   return { date: 'none', amount: 0 };
 };
+
+export default getGlobalAmountDiff;

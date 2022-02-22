@@ -1,6 +1,6 @@
 var SI_SYMBOL = ['', 'k', 'M', 'G', 'T', 'P', 'E'];
 
-export const numFormatter = (number: any) => {
+const numFormatter = (number: any) => {
   // what tier? (determines SI symbol)
   var tier = (Math.log10(Math.abs(number)) / 3) | 0;
 
@@ -17,3 +17,5 @@ export const numFormatter = (number: any) => {
   // format number and add suffix
   return scaled.toFixed(1) + suffix;
 };
+
+export default numFormatter;

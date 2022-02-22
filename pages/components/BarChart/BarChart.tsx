@@ -1,8 +1,8 @@
 import React from 'react';
 import { BarChart as ChartBar, XAxis, Tooltip, Bar, ResponsiveContainer, YAxis } from 'recharts';
 import styles from './BarChart.module.css';
-import { getGlobalWeekly } from '../../../functions/getGlobalWeekly';
-import { numFormatter } from '../../../functions/numFormatter';
+import getGlobalWeekly from '../../../functions/getGlobalWeekly';
+import numFormatter from '../../../functions/numFormatter';
 
 type BarChartType = {
   data:
@@ -22,7 +22,7 @@ const colorMap: { [key: string]: string } = {
 };
 
 const BarChart = ({ data, type, loading }: BarChartType) => {
-  const isError = data && data[0].date === 'API Error';
+  const isError = data && data[0]?.date === 'API Error';
   const weeklyData = data && getGlobalWeekly(data);
 
   const CustomTooltip = ({ active, payload, label }: any) => {
@@ -44,7 +44,7 @@ const BarChart = ({ data, type, loading }: BarChartType) => {
           <div className="loader" />
         </div>
       )}
-      {weeklyData && weeklyData.length && !loading && !isError && (
+      {weeklyData && weeklyData.length && !loading && !isError ? (
         <div className={styles.barChartContainer}>
           <div className={styles.barChartTitle}>Weekly {type}</div>
           <ResponsiveContainer width="100%" height={200}>
@@ -56,6 +56,8 @@ const BarChart = ({ data, type, loading }: BarChartType) => {
             </ChartBar>
           </ResponsiveContainer>
         </div>
+      ) : (
+        <></>
       )}
     </>
   );

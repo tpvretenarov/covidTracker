@@ -1,4 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
+import styled from 'styled-components';
 import { CountryData } from '../../../types';
 import fetchCountry from '../../../functions/fetchCountry';
 import styles from './SearchBar.module.css';
@@ -10,6 +11,7 @@ type SearchBarType = {
   countryData: CountryData | undefined;
   countryLoading: boolean;
   countryError: boolean;
+  countryList: { country: string; updated: string }[] | undefined;
 };
 
 const SearchBar = ({
@@ -19,13 +21,16 @@ const SearchBar = ({
   countryData,
   countryLoading,
   countryError,
+  countryList,
 }: SearchBarType) => {
   const [input, setInput] = useState('');
+  const [suggestions, setSuggestions] = useState(false);
+  const [activeSuggestion, setActiveSuggestion] = useState<string | undefined>();
 
-  const handleSearch = () => {
-    if (input.length > 0) {
+  const handleSearch = (term?: string) => {
+    if ((term && term.length > 0) || input.length > 0) {
       setCountryLoading(true);
-      fetchCountry(input)
+      fetchCountry(term || input)
         .then((res) => {
           if (!res) {
             setCountryLoading(false);
@@ -56,6 +61,32 @@ const SearchBar = ({
     }
   };
 
+  const handleClickSuggestion = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.currentTarget.innerText) {
+      setInput(e.currentTarget.innerText);
+      handleSearch(e.currentTarget.innerText);
+      setSuggestions(false);
+    }
+  };
+
+  const handleEnterSuggestion = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.currentTarget.innerText && e.code) {
+      if (e.code === 'Enter' && input.length > 0) {
+        setInput(e.currentTarget.innerText);
+        handleSearch(e.currentTarget.innerText);
+        setSuggestions(false);
+      }
+    }
+  };
+
+  const handleSuggestionOpen = () => {
+    setSuggestions(true);
+  };
+
+  const handleSuggestionClose = () => {
+    setSuggestions(false);
+  };
+
   return (
     <div className={`${styles.searchBarContainer} text-center col-xs-12 col-md-4 px-1`}>
       <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem', fontSize: '1.5em' }}>Worldwide Covid-19 Tracker</h1>
@@ -81,8 +112,27 @@ const SearchBar = ({
           value={input}
           type="text"
           placeholder={!countryError ? 'Search a country' : 'Invalid country'}
+          onFocus={handleSuggestionOpen}
+          onBlur={handleSuggestionClose}
         />
-        <div tabIndex={0} className={styles.inputSearchButton} onKeyDown={handleEnter} onClick={handleSearch}>
+        {suggestions && (
+          <StyledSuggestions>
+            {countryList?.length &&
+              countryList
+                .filter(({ country }) => country.toLowerCase().indexOf(input.toLowerCase()) > -1)
+                .map(({ country, updated }) => (
+                  <Suggestion
+                    key={country}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={handleClickSuggestion}
+                    onKeyDown={handleEnterSuggestion}
+                  >
+                    {country}
+                  </Suggestion>
+                ))}
+          </StyledSuggestions>
+        )}
+        <div tabIndex={0} className={styles.inputSearchButton} onKeyDown={handleEnter} onClick={() => handleSearch()}>
           {!countryLoading ? (
             <i className="fas fa-search" />
           ) : (
@@ -91,13 +141,40 @@ const SearchBar = ({
         </div>
         {countryError && (
           <i
-            style={{ color: 'rgba(247,15,0, 0.6)' }}
-            className="fa-solid fa-circle-exclamation align-self-center ml-1"
+            style={{ color: 'rgba(247,15,0, 0.6)', fontSize: '16px', position: 'absolute', right: '65px' }}
+            className="fa-solid fa-circle-exclamation align-self-center"
           />
         )}
       </div>
     </div>
   );
 };
+
+const StyledSuggestions = styled.div`
+  position: absolute;
+  top: 39px;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
+  z-index: 1;
+  background-color: #d1cfcf;
+  border: 1px #0b5394 solid;
+`;
+
+const Suggestion = styled.div`
+  display: flex;
+  align-items: center;
+  color: #0b5394;
+  background-color: #d1cfcf;
+  height: 30px;
+  text-align: left;
+  padding: 20px 10px;
+  cursor: pointer;
+
+  :hover {
+    color: #d1cfcf;
+    background-color: #0b5394;
+  }
+`;
 
 export default SearchBar;
