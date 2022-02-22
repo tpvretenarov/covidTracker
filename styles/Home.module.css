@@ -68,21 +68,13 @@
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
-  padding: 5px;
   color: inherit;
   background-color: #d1cfcf;
   text-decoration: none;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
   border: 1px #d1cfcf solid;
   transition: color 0.15s ease, border-color 0.15s ease;
-  min-width: 165px;
-  max-width: 500px;
-  min-height: 80px;
+  transition: 0.3s;
 }
 
 .card:hover,

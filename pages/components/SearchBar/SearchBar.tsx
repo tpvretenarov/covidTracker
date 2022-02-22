@@ -30,10 +30,12 @@ const SearchBar = ({
           if (!res) {
             setCountryLoading(false);
             setCountryError(true);
+            setCountryData(undefined);
             setInput('');
           } else if (res === 'Invalid Country') {
             setCountryLoading(false);
             setCountryError(true);
+            setCountryData(undefined);
             setInput('');
           } else {
             setCountryLoading(false);
@@ -55,7 +57,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className={`${styles.searchBarContainer} text-center col-xs-12 col-md-4`}>
+    <div className={`${styles.searchBarContainer} text-center col-xs-12 col-md-4 px-1`}>
       <h1 style={{ marginTop: '1rem', marginBottom: '0.5rem', fontSize: '1.5em' }}>Worldwide Covid-19 Tracker</h1>
       <div className={styles.styledInputContainer}>
         {!countryError && countryData?.country.length && (
@@ -87,7 +89,12 @@ const SearchBar = ({
             <span style={{ width: '25px', height: '25px', borderColor: '#0b5394 transparent' }} className="loader" />
           )}
         </div>
-        {countryError && <i style={{ color: 'rgba(247,15,0, 0.6)' }} className="fa-solid fa-circle-exclamation ml-1" />}
+        {countryError && (
+          <i
+            style={{ color: 'rgba(247,15,0, 0.6)' }}
+            className="fa-solid fa-circle-exclamation align-self-center ml-1"
+          />
+        )}
       </div>
     </div>
   );

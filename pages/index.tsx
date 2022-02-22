@@ -38,15 +38,6 @@ const Home: NextPage = () => {
     }
   }, [globalData]);
 
-  // const globalRecoveredData = useMemo(() => {
-  //   const data = getGlobalSpecific(globalData, 'recovered', 'all');
-  //   if (data?.length && data[0].date === 'API Error') {
-  //     return undefined;
-  //   } else {
-  //     return data;
-  //   }
-  // }, [globalData]);
-
   const globalDeathData = useMemo(() => {
     const data = getGlobalSpecific(globalData, 'deaths', 'all');
     if (data?.length && data[0].date === 'API Error') {
@@ -64,15 +55,6 @@ const Home: NextPage = () => {
       return data;
     }
   }, [countryData]);
-
-  // const countryRecoveredData = useMemo(() => {
-  //   const data = getCountrySpecific(countryData, 'recovered', 'all');
-  //   if (data?.length && data[0].date === 'API Error') {
-  //     return undefined;
-  //   } else {
-  //     return data;
-  //   }
-  // }, [countryData]);
 
   const countryDeathData = useMemo(() => {
     const data = getCountrySpecific(countryData, 'deaths', 'all');
@@ -119,11 +101,6 @@ const Home: NextPage = () => {
               data={countryCasesData || globalCasesData}
               loading={countryLoading || globalLoading}
             />
-            {/* <BarChart
-              type="Recovered"
-              data={countryRecoveredData || globalRecoveredData}
-              loading={countryLoading || globalLoading}
-            /> */}
             <BarChart
               type="Deaths"
               data={countryDeathData || globalDeathData}
