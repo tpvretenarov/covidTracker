@@ -24,9 +24,12 @@
   padding-top: 10px;
   padding-bottom: 7px;
   border: 1px solid #0b5394;
+  border-radius: 0;
   background-color: #d1cfcf;
   color: #0b5394;
   font-size: 16px;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
 }
 
 .styledInput:active,
