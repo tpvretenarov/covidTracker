@@ -104,8 +104,8 @@ const Map = ({ data, countryData }: MapProps) => {
               <Marker key={`cluster-${cluster.id}`} latitude={latitude} longitude={longitude}>
                 <ClusterMarker
                   style={{
-                    width: `${40 + (pointCount / markerPoints.length) * 200}px`,
-                    height: `${40 + (pointCount / markerPoints.length) * 200}px`,
+                    width: `${40 + (pointCount / (markerPoints ? markerPoints.length : 0)) * 200}px`,
+                    height: `${40 + (pointCount / (markerPoints ? markerPoints.length : 0)) * 200}px`,
                     cursor: 'pointer',
                   }}
                   onClick={() => {
@@ -142,7 +142,7 @@ const Map = ({ data, countryData }: MapProps) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clusters, supercluster, markerPoints.length]);
+  }, [clusters, supercluster, markerPoints]);
 
   const popUps = useMemo(() => {
     {
