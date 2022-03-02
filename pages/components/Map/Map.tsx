@@ -183,7 +183,7 @@ const Map = ({ data, countryData }: MapProps) => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clusters, supercluster, markerPoints.length, activePopup]);
+  }, [clusters, supercluster, markerPoints, activePopup]);
 
   const centerCountry = (country: string) => {
     const countryData = countries_bbox.find((key) => key.country.toLocaleLowerCase() === country.toLocaleLowerCase());
