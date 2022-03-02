@@ -10,6 +10,7 @@ import styles from '../styles/Home.module.css';
 import SearchBar from './components/SearchBar/SearchBar';
 import Statistics from './components/Statistics';
 import BarChart from './components/BarChart/BarChart';
+import Map from './components/Map/Map';
 
 const Home: NextPage = () => {
   const [globalData, setGlobalData] = useState<GlobalData>();
@@ -142,6 +143,7 @@ const Home: NextPage = () => {
               loading={countryLoading || globalLoading}
             />
           </div>
+          {allCountriesData && allCountriesData?.length && <Map data={allCountriesData} countryData={countryData} />}
         </div>
         <footer className={styles.footer}>
           <p style={{ color: '#0b5394' }}>Copyright &copy; Todor Vretenarov {new Date().getFullYear()}</p>

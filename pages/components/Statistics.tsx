@@ -39,8 +39,6 @@ const Statistics = ({ globalData, globalLoading, countryData, countryLoading, co
     return !countryError && tempData && getGlobalAmountDiff(tempData);
   }, [countryData, countryError]);
 
-  console.log(countryCases30);
-
   return (
     <div className="d-flex justify-content-center flex-wrap mb-2 w-100">
       <StatisticCard

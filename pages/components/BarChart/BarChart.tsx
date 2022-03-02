@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart as ChartBar, XAxis, Tooltip, Bar, ResponsiveContainer, YAxis } from 'recharts';
+import styled from 'styled-components';
 import styles from './BarChart.module.css';
 import getGlobalWeekly from '../../../functions/getGlobalWeekly';
 import numFormatter from '../../../functions/numFormatter';
@@ -47,14 +48,14 @@ const BarChart = ({ data, type, loading }: BarChartType) => {
       {weeklyData && weeklyData.length && !loading && !isError ? (
         <div className={styles.barChartContainer}>
           <div className={styles.barChartTitle}>Weekly {type}</div>
-          <ResponsiveContainer width="100%" height={200}>
+          <StyledResponsiveContainer width="99%" height={200}>
             <ChartBar data={weeklyData}>
               <Tooltip cursor={{ fill: 'rgba(11, 83, 148, 0.3)' }} content={<CustomTooltip />} />
               <XAxis dataKey="date" />
               <YAxis tickFormatter={(value) => numFormatter(value)} />
               <Bar barSize={10} dataKey="Amount" fill={colorMap[type]} />
             </ChartBar>
-          </ResponsiveContainer>
+          </StyledResponsiveContainer>
         </div>
       ) : (
         <></>
@@ -62,5 +63,11 @@ const BarChart = ({ data, type, loading }: BarChartType) => {
     </>
   );
 };
+
+const StyledResponsiveContainer = styled(ResponsiveContainer)`
+  .recharts-wrapper {
+    position: absolute;
+  }
+`;
 
 export default BarChart;

@@ -25,7 +25,6 @@ const SearchBar = ({
 }: SearchBarType) => {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState(false);
-  const [activeSuggestion, setActiveSuggestion] = useState<string | undefined>();
 
   const handleSearch = (term?: string) => {
     if ((term && term.length > 0) || input.length > 0) {
@@ -113,6 +112,7 @@ const SearchBar = ({
           type="text"
           placeholder={!countryError ? 'Search a country' : 'Invalid country'}
           onFocus={handleSuggestionOpen}
+          onClick={handleSuggestionOpen}
           onBlur={handleSuggestionClose}
         />
         {suggestions && (
