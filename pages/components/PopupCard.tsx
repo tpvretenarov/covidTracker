@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Tooltip from './BootstrapTooltip';
+import BootstrapTooltip from './BootstrapTooltip';
 import DonutChart from './DonutChart/DonutChart';
 
 type PopupCardProps = {
@@ -23,18 +23,18 @@ const PopupCard = ({ country, updatedAt, confirmed, deaths, province, latitude, 
       <div className="d-flex justify-content-between align-items-center">
         <DonutChart cases={confirmed ? confirmed : 0} deaths={deaths ? deaths : 0} />
         <div style={{ cursor: 'pointer' }}>
-          <Tooltip text={`Cases: ${confirmed ? confirmed.toLocaleString() : '0'}`}>
+          <BootstrapTooltip text={`Cases: ${confirmed ? confirmed.toLocaleString() : '0'}`}>
             <div>
               <i style={{ color: '#1966ca', marginRight: '8px' }} className="fa-solid fa-mask-face" />
               {confirmed ? confirmed.toLocaleString() : 0}
             </div>
-          </Tooltip>
-          <Tooltip text={`Deaths: ${deaths ? deaths.toLocaleString() : 0}`}>
+          </BootstrapTooltip>
+          <BootstrapTooltip text={`Deaths: ${deaths ? deaths.toLocaleString() : 0}`}>
             <div>
               <i style={{ color: '#C81E1E', marginRight: '6px', marginLeft: '2px' }} className="fa-solid fa-skull" />{' '}
               {deaths ? deaths.toLocaleString() : 0}
             </div>
-          </Tooltip>
+          </BootstrapTooltip>
         </div>
       </div>
       <Divider />
