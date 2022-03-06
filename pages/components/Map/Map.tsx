@@ -1,11 +1,19 @@
 import * as React from 'react';
 import { useState, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import ReactMapGL, { ViewportProps, Marker, Popup, FlyToInterpolator, WebMercatorViewport } from 'react-map-gl';
+import ReactMapGL, {
+  ViewportProps,
+  Marker,
+  Popup,
+  FlyToInterpolator,
+  WebMercatorViewport,
+  FullscreenControl,
+} from 'react-map-gl';
 import { MapRef } from 'react-map-gl/src/components/static-map';
 import { AllCountryData, CountryData } from '../../../types';
 import useSupercluster from 'use-supercluster';
 import countries_bbox from '../../../public/countries_bbox.json';
+import PopupCard from '../PopupCard';
 
 type MapProps = {
   data: AllCountryData;
@@ -132,7 +140,7 @@ const Map = ({ data, countryData }: MapProps) => {
             <Marker key={markerKey} longitude={longitude} latitude={latitude}>
               <div
                 onClick={() => setActivePopup(activePopup === markerKey ? null : markerKey)}
-                style={{ fontSize: '14px', color: '#f70f00', height: '10px', width: '10px', cursor: 'pointer' }}
+                style={{ fontSize: '20px', color: '#f70f00', cursor: 'pointer' }}
               >
                 <i className="fa-solid fa-circle" />
               </div>
@@ -150,7 +158,7 @@ const Map = ({ data, countryData }: MapProps) => {
         clusters &&
         clusters.map((cluster) => {
           const [longitude, latitude] = cluster.geometry.coordinates;
-          const { cluster: isCluster, point_count: pointCount, country, county, deaths, province } = cluster.properties;
+          const { cluster: isCluster, country, county, confirmed, deaths, province, updatedAt } = cluster.properties;
           const markerKey = !isCluster ? `${longitude}-${latitude}-${country}-${county}-${province}-${deaths}` : null;
           if (!isCluster) {
             return (
@@ -162,17 +170,22 @@ const Map = ({ data, countryData }: MapProps) => {
                     closeButton
                     closeOnClick={false}
                     onClose={() => setActivePopup(null)}
-                    offsetLeft={6}
+                    offsetLeft={10}
+                    offsetTop={12}
                     anchor="bottom"
                     captureScroll
                     captureClick
                     captureDoubleClick
                   >
-                    <div className="p-2 d-flex flex-column">
-                      <div>{country ? `Country: ${country}` : null}</div>
-                      <div>{county ? `County: ${county}` : null}</div>
-                      <div>{province ? `Province: ${province}` : null}</div>
-                    </div>
+                    <PopupCard
+                      country={country}
+                      province={province}
+                      updatedAt={updatedAt}
+                      confirmed={confirmed}
+                      deaths={deaths}
+                      longitude={longitude}
+                      latitude={latitude}
+                    />
                   </Popup>
                 ) : null}
               </React.Fragment>
@@ -230,6 +243,7 @@ const Map = ({ data, countryData }: MapProps) => {
         reuseMaps
         maxZoom={20}
       >
+        <FullscreenControl style={{ top: 15, right: 15 }} />
         {markers}
         {popUps}
       </ReactMapGL>
