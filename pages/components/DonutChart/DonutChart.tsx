@@ -15,7 +15,16 @@ const DonutChart = ({ cases, deaths }: DonutChartType) => {
     <>
       {data.length && (
         <PieChart width={120} height={120}>
-          <Pie dataKey="value" data={data} cx="50%" outerRadius={60} innerRadius={30} fill="#1966ca" paddingAngle={10}>
+          <Pie
+            isAnimationActive={false}
+            dataKey="value"
+            data={data}
+            cx="50%"
+            outerRadius={60}
+            innerRadius={30}
+            fill="#1966ca"
+            paddingAngle={10}
+          >
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={entry.name === 'Cases' ? '#1966ca' : '#C81E1E'} />
             ))}

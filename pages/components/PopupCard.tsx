@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Tooltip from './Tooltip';
+import Tooltip from './BootstrapTooltip';
 import DonutChart from './DonutChart/DonutChart';
 
 type PopupCardProps = {
@@ -62,7 +62,6 @@ const SmallText = styled.p`
 
 const Divider = styled.hr`
   width: 100%;
-//   margin: 0.5rem 0;
 `;
 
 export default PopupCard;
