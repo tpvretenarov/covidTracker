@@ -3,8 +3,13 @@ import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+// import Script from 'next/script';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null;
+  }, []);
   return (
     <>
       <Head>
