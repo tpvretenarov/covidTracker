@@ -21,6 +21,7 @@ type MapProps = {
 };
 
 const Map = ({ data, countryData }: MapProps) => {
+  console.log(data, countryData);
   const [viewport, setViewport] = useState<{
     latitude: number;
     longitude: number;
@@ -28,9 +29,9 @@ const Map = ({ data, countryData }: MapProps) => {
     transitionDuration?: number | 'auto' | undefined;
     transitionInterpolator?: FlyToInterpolator;
   }>({
-    latitude: 37.7577,
-    longitude: -122.4376,
-    zoom: 8,
+    latitude: 51.2538,
+    longitude: -85.3232,
+    zoom: 4,
   });
   const [activePopup, setActivePopup] = useState<string | null>(null);
   const mapRef = useRef<MapRef | null>(null);
@@ -62,6 +63,16 @@ const Map = ({ data, countryData }: MapProps) => {
                   t.coordinates.longitude === value.coordinates.longitude
               )
           )
+          // filters out all the countries but the one you searched
+          .filter((element) => {
+            if (countryData !== undefined && element.country === countryData.country) {
+              return true;
+            }
+            if (countryData === undefined) {
+              return true;
+            }
+            return false;
+          })
           .map(
             ({
               country,
@@ -88,7 +99,7 @@ const Map = ({ data, countryData }: MapProps) => {
           )
       );
     }
-  }, [data]);
+  }, [countryData?.country, data]);
 
   const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
 
