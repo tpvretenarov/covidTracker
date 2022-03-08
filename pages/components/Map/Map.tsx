@@ -21,7 +21,6 @@ type MapProps = {
 };
 
 const Map = ({ data, countryData }: MapProps) => {
-  console.log(data, countryData);
   const [viewport, setViewport] = useState<{
     latitude: number;
     longitude: number;
