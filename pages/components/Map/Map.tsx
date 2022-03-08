@@ -99,7 +99,7 @@ const Map = ({ data, countryData }: MapProps) => {
           )
       );
     }
-  }, [countryData?.country, data]);
+  }, [countryData, data]);
 
   const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
 
