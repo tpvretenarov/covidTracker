@@ -25,9 +25,9 @@ const PopupCard = ({ country, updatedAt, confirmed, deaths, province, latitude, 
 
   return (
     <CardContainer className="d-flex flex-column flex-wrap px-2 pt-3">
-      <h4 className="m-0 p-0">{province || country}</h4>
+      <h6 className="m-0 p-0">{province || country}</h6>
       <SmallText>
-        LAT: {latitude}, LON: {longitude}
+        LAT: {latitude ? Number(latitude).toFixed(4) : null}, LON: {longitude ? Number(longitude).toFixed(4) : null}
       </SmallText>
       <Divider />
       <div className="d-flex justify-content-between align-items-center">
