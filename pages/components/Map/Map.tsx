@@ -53,7 +53,7 @@ const Map = ({ data, countryData }: MapProps) => {
       return (
         data &&
         data
-          .filter(
+          ?.filter(
             (value, index, self) =>
               index ===
               self.findIndex(

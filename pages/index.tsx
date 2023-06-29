@@ -37,21 +37,21 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // fetch all country data on initial load
-  useEffect(() => {
-    setAllCountriesLoading(true);
-    fetchAllCountries().then((res) => {
-      if (res) {
-        setAllCountriesLoading(false);
-        setAllCountriesData(res);
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // // fetch all country data on initial load
+  // useEffect(() => {
+  //   setAllCountriesLoading(true);
+  //   fetchAllCountries().then((res) => {
+  //     if (res) {
+  //       setAllCountriesLoading(false);
+  //       setAllCountriesData(res);
+  //     }
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     if (allCountriesData && allCountriesData.length > 0) {
-      const countryListData = allCountriesData.map((key) => {
+      const countryListData = allCountriesData?.map((key) => {
         if (key.country && key.updatedAt) {
           return { country: key.country, updated: key.updatedAt };
         }
@@ -144,7 +144,7 @@ const Home: NextPage = () => {
               loading={countryLoading || globalLoading}
             />
           </div>
-          {allCountriesData && allCountriesData?.length && <Map data={allCountriesData} countryData={countryData} />}
+          {/* {allCountriesData && allCountriesData?.length && <Map data={allCountriesData} countryData={countryData} />} */}
         </div>
         <footer className={styles.footer}>
           <p style={{ color: '#0b5394' }}>Copyright &copy; Todor Vretenarov {new Date().getFullYear()}</p>
